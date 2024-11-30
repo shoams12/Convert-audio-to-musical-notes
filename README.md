@@ -1,5 +1,18 @@
-# Convert-audio-to-musical-notes
-This is a fullstack project and was my first experiment in Machine learning model training.
-The project's purpose is to get an audio file as input from the user and convert it into musical notes, the user will get to download the piece.
-The project should be recognized as a learning opportunity rather than a finalized product.
-The dataset and metadata are only an example to the real ones and to get the model accuracy of about 68% I had to use about 1200 audio files.
+# Convert Audio To Musical Notes
+🎵 A Fullstack Project for Music Enthusiasts 🎶
+
+This project transforms an audio file into musical notes, providing an interactive way for users to understand and recreate musical compositions.
+
+-Project Overview-
+
+This was my first venture into machine learning model training, combining backend expertise with frontend design to create a user-friendly application. The project is intended as a learning opportunity, showcasing concepts rather than being a production-ready product.
+
+Key features include:
+
+Input: Upload an audio file (e.g., .mp3, .wav).
+
+Processing: A trained ML model extracts musical features.
+
+Output: Downloadable musical notes in a standard format (PDF).
+
+Note: The dataset and metadata used are examples, and the model's current accuracy is approximately 68%, trained on a dataset of 1,200 audio files.
