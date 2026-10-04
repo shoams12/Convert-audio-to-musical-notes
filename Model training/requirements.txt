@@ -1,0 +1,10 @@
+numpy<2
+pandas
+scipy
+librosa
+resampy
+tqdm
+scikit-learn
+joblib
+matplotlib
+tensorflow==2.15.*

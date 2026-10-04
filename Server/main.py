@@ -1,3 +1,4 @@
+import os
 from pydub import AudioSegment
 import numpy as np
 import librosa
@@ -6,8 +7,28 @@ import joblib
 import subprocess
 from tensorflow.keras.models import load_model
 from moviepy.editor import *
-loaded_model = load_model('C:/Datasets/piano_notes_Dataset/audio_classification2.hdf5')
-LE = joblib.load('C:/projects/model_for_chords/project/label_encoder.pkl')
+
+# Look for the trained model next to the repo first, then in the original local folders.
+# NOTEME_MODEL / NOTEME_LABEL_ENCODER environment variables override both.
+_MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Model training', 'project')
+
+
+def _first_existing(env_var, *candidates):
+    paths = [os.environ.get(env_var)] + list(candidates)
+    for path in paths:
+        if path and os.path.exists(path):
+            return path
+    raise FileNotFoundError(f"Couldn't find any of: {[p for p in paths if p]}. Set {env_var} to the file's path.")
+
+
+MODEL_PATH = _first_existing('NOTEME_MODEL',
+                             os.path.join(_MODEL_DIR, 'audio_classification2.hdf5'),
+                             'C:/Datasets/piano_notes_Dataset/audio_classification2.hdf5')
+LABEL_ENCODER_PATH = _first_existing('NOTEME_LABEL_ENCODER',
+                                     os.path.join(_MODEL_DIR, 'label_encoder.pkl'),
+                                     'C:/notes converting project/Model training/project/label_encoder.pkl')
+loaded_model = load_model(MODEL_PATH)
+LE = joblib.load(LABEL_ENCODER_PATH)
 
 
 # Converting audio

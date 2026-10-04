@@ -1,20 +1,18 @@
-let count = 0;
-export function User(userName, password, email) {
-  this.userId = count++;
-  this.userName = userName;
-  this.password = password;
-  this.email = email;
-  this.songArr = [];
-}
+const STORAGE_KEY = "currentUser";
 
 export function saveUser(user) {
-  localStorage.setItem("currentUser", JSON.stringify(user));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
 }
 
 export function getUser() {
-  let user = localStorage.getItem("currentUser");
-  return JSON.parse(user);
+  try {
+    const user = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return user && user.email ? user : null;
+  } catch {
+    return null;
+  }
 }
-export function removeUser(){
-localStorage.removeItem("currentUser")
+
+export function removeUser() {
+  localStorage.removeItem(STORAGE_KEY);
 }

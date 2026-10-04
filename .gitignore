@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+/Front/build/
+
+# python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+
+# runtime files created by the server
+Server/audioUploadedFiles/
+Server/pdfOutputFiles/
+Server/normalized1.wav
+Server/onset_times.txt
+Server/output.wav
+
+# misc
+.DS_Store
+npm-debug.log*
+.env*

@@ -1,0 +1,12 @@
+flask
+flask-cors
+pymongo
+werkzeug
+numpy<2
+librosa
+soundfile
+pydub
+joblib
+scikit-learn
+tensorflow==2.15.*
+moviepy<2.0

@@ -1,89 +1,41 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { UserList } from "./data/db";
-import { useState } from "react";
-import LogIn from "./components/logIn";
-import { Link, BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./components/HomePage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContext";
 import About from "./components/About";
-import LogOut from "./components/LogOut";
-import SignUp from "./components/signUp";
 import History from "./components/History";
-import AboutGuest from "./components/AboutGuest";
+import HomePage from "./components/HomePage";
+import Landing from "./components/Landing";
+import LogIn from "./components/logIn";
+import Navbar from "./components/Navbar";
+import { GuestOnly, RequireAuth } from "./components/ProtectedRoute";
+import SignUp from "./components/signUp";
 
 function App() {
-  const [myUser, signIn] = useState(undefined); //if there is a user
- 
   return (
-    <div className="App" >
-     
-      <BrowserRouter>
-        <Nav view={myUser} />
-
-        <Routes>
-          <Route
-            path="logIn"
-            element={<LogIn usersList={UserList} enterUser={signIn} />}
-          ></Route>
-          <Route index element={<Navigate to={"LogOut"} />}  />
-          {/* <Route index element={<LogIn usersList={UserList} enterUser={signIn} />} /> */}
-          <Route path="Homepage" element={<HomePage />} />
-          <Route path="About" element={<About  />} />
-          <Route path="AboutGuest" element={<AboutGuest  />} />
-          <Route path="History" element={<History />} />
-          <Route path="LogOut" element={<LogOut  />} />
-          <Route path="signUp" element={<SignUp />} />
-        </Routes>
-      
-      </BrowserRouter>
-    </div>
+    <AuthProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <div className="app">
+            <Navbar />
+            <main className="main">
+              <Routes>
+                <Route index element={<GuestOnly><Landing /></GuestOnly>} />
+                <Route path="login" element={<GuestOnly><LogIn /></GuestOnly>} />
+                <Route path="signup" element={<GuestOnly><SignUp /></GuestOnly>} />
+                <Route path="about" element={<About />} />
+                <Route path="home" element={<RequireAuth><HomePage /></RequireAuth>} />
+                <Route path="history" element={<RequireAuth><History /></RequireAuth>} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+            <footer className="footer">
+              © {new Date().getFullYear()} NoteMe · Where sound meets score 🎹
+            </footer>
+          </div>
+        </BrowserRouter>
+      </ToastProvider>
+    </AuthProvider>
   );
 }
 
 export default App;
-
-export function Nav(view) {
-  return (
-    <div
-      style={{
-        display: view === undefined ? "flex" : "none",
-        justifyContent: "space-evenly",
-        backgroundColor: "#0F52BD",fontSize:'20px',fontFamily:'monospace'
-      }}
-    >
-      <Link
-        style={{
-          padding: "5%",paddingTop:'2%',
-          backgroundColor: "white",
-          color: "black",
-          textDecoration: "none",
-        }}
-        to="/logIn"
-      >
-        Login
-      </Link>
-      <Link
-        style={{
-          padding: "5%",paddingTop:'2%',
-          backgroundColor: "white",
-          color: "black",
-          textDecoration: "none",
-        }}
-        to="/About"
-      >
-        About us
-      </Link>
-      <Link
-        style={{
-          padding: "5%",paddingTop:'2%',
-          backgroundColor: "white",
-          color: "black",
-          textDecoration: "none",
-        }}
-        to="/AboutGuest"
-      >
-        About us
-      </Link>
-    </div>
-  );
-}

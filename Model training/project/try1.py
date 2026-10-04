@@ -12,8 +12,8 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from datetime import datetime
 
 # Load metadata for training and testing
-df_train = pd.read_csv("yourTrainMetadataPath.csv")
-df_test = pd.read_csv("yourTestMetadataPath.csv")
+df_train = pd.read_csv("../metadata/88notesMetadata_train.csv")
+df_test = pd.read_csv("../metadata/piano_notes_test_metadata.csv")
 
 # Feature extraction function
 def Feature_extractor(file):
